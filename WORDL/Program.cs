@@ -1,22 +1,30 @@
-﻿using System;
+﻿// 0xRETRO https://github.com/0xr3tro
+using System;
 using System.Collections.Generic;
 
 internal class Program
 {
     private static void Main()
     {
-        // Powitanie gracza
         Console.WriteLine("Witaj w grze Wordl!");
 
-        // Pobranie imienia gracza
         Console.Write("Podaj swoje imię: ");
         string imie = Console.ReadLine();
 
-        // Przywitanie gracza
         Console.WriteLine($"Cześć, {imie}! Zaczynamy grę!");
 
         // Lista słów do wylosowania
-        List<string> listaSlow = new List<string> { "cloud", "apple", "brave", "house", "light", "train", "water", "bread", "plane", "heart" };
+        List<string> listaSlow = new List<string> { "cloud",
+            "apple",
+            "brave",
+            "house",
+            "light",
+            "train",
+            "water",
+            "bread",
+            "plane",
+            "heart"
+        };
 
         // Pętla główna gry
         while (true)
@@ -42,14 +50,12 @@ internal class Program
                     continue;
                 }
 
-                // Sprawdzenie, czy słowo jest w liście
                 if (!listaSlow.Contains(slowoGracza))
                 {
                     Console.WriteLine("Słowo nie znajduje się na liście. Spróbuj ponownie.");
                     continue;
                 }
 
-                // Sprawdzenie, czy gracz odgadł słowo
                 if (slowoGracza == wylosowaneSlowo)
                 {
                     Console.WriteLine("Gratulacje! Odgadłeś słowo!");
@@ -87,14 +93,13 @@ internal class Program
                                 if (!trafioneLitery[j] && slowoGracza[i] == wylosowaneSlowo[j] && slowoGracza[j] != wylosowaneSlowo[j])
                                 {
                                     podpowiedz[i] = '*';
-                                    trafioneLitery[j] = true; // Zaznaczenie, że litera została użyta
+                                    trafioneLitery[j] = true;
                                     break;
                                 }
                             }
                         }
                     }
 
-                    // Wyświetlenie podpowiedzi
                     Console.WriteLine("Podpowiedź: " + new string(podpowiedz));
                 }
 
@@ -106,15 +111,13 @@ internal class Program
                 Console.WriteLine($"Niestety, nie odgadłeś słowa. Prawidłowe słowo to: {wylosowaneSlowo}");
             }
 
-            // Pytanie, czy gracz chce kontynuować
             Console.Write("Czy chcesz zagrać ponownie? (tak/nie): ");
             string odpowiedz = Console.ReadLine().ToLower();
 
-            // Sprawdzenie odpowiedzi
             if (odpowiedz != "tak")
             {
                 Console.WriteLine("Dziękujemy za grę! Do zobaczenia!");
-                break; // Zakończenie gry
+                break;
             }
         }
     }
