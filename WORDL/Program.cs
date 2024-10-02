@@ -3,78 +3,96 @@ using System.Collections.Generic;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
-        Console.WriteLine("Wyjasni znakow:");
-        Console.WriteLine("_ -> litera nie wystepuje w wybranym słowie");
-        Console.WriteLine("+ -> litera jest na poprawnym miejscu");
-        Console.WriteLine("* -> litera jest w słowie, ale w złym miejscu");
+        Console.WriteLine("Witaj w grze Wordl!");
 
-        List<string> list = new List<string>();
+        Console.Write("Podaj swoje imię: ");
+        string imie = Console.ReadLine();
 
-        list.Add("apple");
-        list.Add("feld");
-        list.Add("coud");
-        list.Add("p__p_");
-        list.Add("pp_p_");
+        Console.WriteLine($"Cześć, {imie}! Zaczynamy grę!");
 
-        Random random = new Random();
-        int id_slowa = random.Next(list.Count);
+        List<string> listaSlow = new List<string> {
+            "cloud",
+            "apple",
+            "brave",
+            "house",
+            "light",
+            "train",
+            "water",
+            "bread",
+            "plane",
+            "heart"
+        };
 
-        string losowane_slowo = list[id_slowa];
-        Console.WriteLine("Podaj słowo 5-literowe:");
-
-        string odpowiedz = Console.ReadLine();
-        List<string> podpowiedz = new List<string>() { "-", "-", "-", "-", "-" };
-
-        if (odpowiedz.Length == 5)
+        while (true)
         {
-            if (list.Contains(odpowiedz))
+            Random rand = new Random();
+            string wylosowaneSlowo = listaSlow[rand.Next(listaSlow.Count)];
+
+            int pozostaleProby = 5;
+            bool odgadniete = false;
+
+            while (pozostaleProby > 0 && !odgadniete)
             {
-                if (losowane_slowo == odpowiedz)
+                Console.Write($"Podaj swoje słowo (5 liter) - pozostało prób: {pozostaleProby}: ");
+                string slowoGracza = Console.ReadLine().ToLower();
+
+                if (slowoGracza.Length != 5)
                 {
-                    Console.WriteLine("Gratulacje!!! Podałeś poprawne słowo.");
+                    Console.WriteLine("Słowo musi mieć dokładnie 5 liter. Spróbuj ponownie.");
+                    continue;
+                }
+
+                if (!listaSlow.Contains(slowoGracza))
+                {
+                    Console.WriteLine("Słowo nie znajduje się na liście. Spróbuj ponownie.");
+                    continue;
+                }
+
+                if (slowoGracza == wylosowaneSlowo)
+                {
+                    Console.WriteLine("Gratulacje! Odgadłeś słowo!");
+                    odgadniete = true;
                 }
                 else
                 {
-                    // Sprawdź poprawne litery na właściwych miejscach
+                    string podpowiedz = "";
+
                     for (int i = 0; i < 5; i++)
                     {
-                        if (odpowiedz[i] == losowane_slowo[i])
+                        if (slowoGracza[i] == wylosowaneSlowo[i])
                         {
-                            podpowiedz[i] = "+";
+                            podpowiedz += "+ ";
+                        }
+                        else if (wylosowaneSlowo.Contains(slowoGracza[i]))
+                        {
+                            podpowiedz += "* ";
+                        }
+                        else
+                        {
+                            podpowiedz += "_ ";
                         }
                     }
 
-                    // Sprawdź litery występujące w słowie, ale na złych pozycjach
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (odpowiedz[i] != losowane_slowo[i] && losowane_slowo.Contains(odpowiedz[i]))
-                        {
-                            podpowiedz[i] = "*";
-                        }
-                    }
-
-                    // Sprawdź litery, które nie występują w losowanym słowie
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (!losowane_slowo.Contains(odpowiedz[i]))
-                        {
-                            podpowiedz[i] = "_";
-                        }
-                    }
-
-                    Console.WriteLine("Podpowiedź: " + string.Join(" ", podpowiedz));
+                    Console.WriteLine("Podpowiedź: " + podpowiedz);
+                    pozostaleProby--;
                 }
             }
-            else
+
+            if (!odgadniete)
             {
-                Console.WriteLine("Słowo nieznane.");
+                Console.WriteLine($"Niestety, nie udało się odgadnąć słowa. Poprawne słowo to: {wylosowaneSlowo}");
             }
-        }
-        else
-        {
-            Console.WriteLine("Zła długość słowa. Powinno mieć 5 liter.");
+
+            S Console.Write("Czy chcesz zagrać ponownie? (tak/nie): ");
+            string odpowiedz = Console.ReadLine().ToLower();
+
+            if (odpowiedz != "tak")
+            {
+                Console.WriteLine("Dziękujemy za grę! Do zobaczenia!");
+                break;
+            }
         }
     }
 }
