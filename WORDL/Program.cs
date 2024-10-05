@@ -111,8 +111,22 @@ internal class Program
                 Console.WriteLine($"Niestety, nie odgadłeś słowa. Prawidłowe słowo to: {wylosowaneSlowo}");
             }
 
-            Console.Write("Czy chcesz zagrać ponownie? (tak/nie): ");
-            string odpowiedz = Console.ReadLine().ToLower();
+            // Zapytanie o dalszą grę
+            string odpowiedz;
+            while (true)
+            {
+                Console.Write("Czy chcesz zagrać ponownie? (tak/nie): ");
+                odpowiedz = Console.ReadLine().ToLower();
+
+                if (odpowiedz == "tak" || odpowiedz == "nie")
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Nieprawidłowa odpowiedź. Wpisz 'tak' lub 'nie'.");
+                }
+            }
 
             if (odpowiedz != "tak")
             {
